@@ -1,12 +1,10 @@
 {
-    "@reprojetei": {
-        "password": "321",
+    "@dustin": {
+        "password": "@@dustin@consult",
         "token": "@dusti1nhz",
         "expiration": "2035-01-23",
         "role": "admin",
-        "devices": [
-            "Mozilla/5.0 (iPhone; CPU iPhone OS 18_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Mobile/15E148 Safari/604.1"
-        ]
+        "devices": []
     },
     "@t4x-fotkline": {
         "password": "09pdK2020_",
@@ -20,14 +18,14 @@
     "@apiBROficial": {
         "password": "@apiBrasilO.fc",
         "token": "@apiBR",
-        "expiration": "2335-12-99",
+        "expiration": "2335-12-31",
         "role": "admin",
         "devices": []
     },
     "@ugly144": {
         "password": "&47560",
         "token": "@ugly44",
-        "expiration": "2335-12-99",
+        "expiration": "2335-12-31",
         "role": "admin",
         "devices": []
     },
