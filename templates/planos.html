@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preços - Consult Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a0f1a;
+            font-family: 'Nunito', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Alterado para evitar espaçamento fixo */
+            align-items: center;
+            position: relative;
+            overflow-y: auto; /* Permitir rolagem vertical */
+            overflow-x: hidden; /* Evitar rolagem horizontal */
+        }
+
+        .pricing-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+            gap: 40px;
+            perspective: 1500px;
+            flex-wrap: wrap;
+            max-width: 100vw;
+            position: relative;
+            overflow: visible; /* Permitir visibilidade total do conteúdo */
+        }
+
+        .pricing-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(143, 94, 251, 0.2), transparent 70%);
+            animation: glowRing 4s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        @keyframes glowRing {
+            0%, 100% { transform: scale(0.9); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.5; }
+        }
+
+        .plan-card {
+            background: rgba(36, 20, 36, 0.9);
+            border-radius: 25px;
+            min-width: 320px;
+            max-width: 360px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(143, 94, 251, 0.4);
+            border: 1px solid rgba(143, 94, 251, 0.3);
+            transition: all 0.5s ease;
+            transform: rotateY(10deg) translateZ(-50px);
+            opacity: 0;
+            animation: cardEntry 1s ease-out forwards;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card:nth-child(1) { animation-delay: 0.2s; }
+        .plan-card:nth-child(2) { animation-delay: 0.4s; }
+        .plan-card:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes cardEntry {
+            to {
+                opacity: 1;
+                transform: rotateY(0deg) translateZ(0);
+            }
+        }
+
+        .plan-card:hover {
+            transform: scale(1.08) translateY(-15px) translateZ(50px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(143, 94, 251, 0.7);
+            border: 1px solid rgba(143, 94, 251, 0.8);
+        }
+
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(143, 94, 251, 0.15), transparent 70%);
+            animation: innerGlow 3s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        @keyframes innerGlow {
+            0%, 100% { transform: rotate(0deg); opacity: 0.5; }
+            50% { transform: rotate(360deg); opacity: 0.8; }
+        }
+
+        .plan-card h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #8f5efb;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(143, 94, 251, 0.6);
+            animation: textGlow 2s infinite alternate;
+        }
+
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 10px rgba(143, 94, 251, 0.4); }
+            100% { text-shadow: 0 0 20px rgba(143, 94, 251, 0.8); }
+        }
+
+        .plan-card .price {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            opacity: 0.85;
+            margin-bottom: 15px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .plan-card .description {
+            font-size: 16px;
+            font-weight: 400;
+            color: #cccccc;
+            background: rgba(143, 94, 251, 0.1);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 10px rgba(143, 94, 251, 0.2);
+        }
+
+        .plan-card .features ul {
+            list-style: none;
+            text-align: left;
+            padding: 0 20px;
+            margin-bottom: 35px;
+        }
+
+        .plan-card .features li {
+            font-size: 15px;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            color: #dddddd;
+            opacity: 0;
+            animation: fadeInList 0.5s ease-out forwards;
+        }
+
+        .plan-card .features li:nth-child(1) { animation-delay: 0.8s; }
+        .plan-card .features li:nth-child(2) { animation-delay: 0.9s; }
+        .plan-card .features li:nth-child(3) { animation-delay: 1.0s; }
+        .plan-card .features li:nth-child(4) { animation-delay: 1.1s; }
+        .plan-card .features li:nth-child(5) { animation-delay: 1.2s; }
+
+        @keyframes fadeInList {
+            to { opacity: 1; transform: translateX(0); }
+            from { opacity: 0; transform: translateX(-20px); }
+        }
+
+        .plan-card .features li::before {
+            content: "";
+            border-color: #8f5efb;
+            border-style: solid;
+            border-width: 0 2px 2px 0;
+            display: inline-block;
+            height: 12px;
+            width: 6px;
+            transform: rotate(45deg);
+            margin-right: 12px;
+        }
+
+        .plan-card a.cta {
+            display: block;
+            padding: 15px 30px;
+            background: linear-gradient(90deg, #8f5efb, #aa2b33);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: 700;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 20px rgba(143, 94, 251, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card a.cta::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .plan-card a.cta:hover {
+            background: linear-gradient(90deg, #aa2b33, #8f5efb);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(143, 94, 251, 0.8);
+        }
+
+        .plan-card.basic a.cta {
+            background: transparent;
+            border: 2px solid #8f5efb;
+            color: #8f5efb;
+        }
+
+        .plan-card.basic a.cta:hover {
+            background: #8f5efb;
+            color: #ffffff;
+        }
+
+        footer {
+            padding: 30px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer .copyright {
+            display: inline-block;
+            background: #1a0f1a;
+            color: #ffffff;
+            padding: 12px 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 20px rgba(143, 94, 251, 0.5), inset 0 0 10px rgba(143, 94, 251, 0.2);
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            animation: footerGlow 3s infinite alternate;
+        }
+
+        @keyframes footerGlow {
+            0% { box-shadow: 0 0 15px rgba(143, 94, 251, 0.4), inset 0 0 8px rgba(143, 94, 251, 0.2); }
+            100% { box-shadow: 0 0 25px rgba(143, 94, 251, 0.7), inset 0 0 12px rgba(143, 94, 251, 0.3); }
+        }
+
+        /* Responsividade corrigida */
+        @media (max-width: 768px) {
+            body {
+                justify-content: flex-start; /* Ajusta o conteúdo ao topo */
+                height: auto; /* Altura ajustável */
+            }
+
+            .pricing-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 20px;
+                overflow: visible; /* Remove restrição de overflow */
+                min-height: auto; /* Remove altura fixa */
+            }
+
+            .plan-card {
+                min-width: 100%;
+                max-width: 90%; /* Limita largura para melhor visualização */
+                margin: 20px 0; /* Espaçamento vertical entre os cards */
+            }
+
+            footer {
+                padding: 20px;
+                position: static; /* Remove posicionamento fixo para fluir naturalmente */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .plan-card {
+                padding: 30px 20px; /* Reduz padding em telas menores */
+            }
+
+            .plan-card h2 {
+                font-size: 28px; /* Reduz tamanho do título */
+            }
+
+            .plan-card .price {
+                font-size: 20px; /* Reduz tamanho do preço */
+            }
+
+            .plan-card .description {
+                font-size: 14px; /* Reduz tamanho da descrição */
+            }
+
+            .plan-card .features li {
+                font-size: 13px; /* Reduz tamanho dos itens da lista */
+            }
+
+            .plan-card a.cta {
+                font-size: 15px; /* Reduz tamanho do botão */
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pricing-container">
+        <div class="plan-card basic">
+            <h2>Plano Semanal</h2>
+            <div class="price">R$ 13,59 / semana</div>
+            <div class="description">Ideal para quem está começando!</div>
+            <div class="features">
+                <ul>
+                    <li>30 Requisições Diárias</li>
+                    <li>Suporte 24h / 7 dias</li>
+                    <li>Todos os módulos disponíveis</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/5582993708218?text=QUERO%20ADQUIRIR%20O%20PLANO%20%27SEMANAL%27%20DO%20CONSULT%20CENTER" class="cta">Adquirir</a>
+        </div>
+        <div class="plan-card">
+            <h2>Plano Mensal</h2>
+            <div class="price">R$ 46,79 / mês</div>
+            <div class="description">Totalmente sem juros</div>
+            <div class="features">
+                <ul>
+                    <li>Suporte Priorizado 24h / 7 dias</li>
+                    <li>250 Requisições Diárias</li>
+                    <li>Token Personalizado</li>
+                    <li>APIs de todos os módulos</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/5582993708218?text=QUERO%20ADQUIRIR%20O%20PLANO%20%27MENSAL%27%20DO%20CONSULT%20CENTER" class="cta">Adquirir</a>
+        </div>
+        <div class="plan-card">
+            <h2>Plano Anual</h2>
+            <div class="price">R$ 160 / ano</div>
+            <div class="description">Totalmente sem juros</div>
+            <div class="features">
+                <ul>
+                    <li>Suporte VIP Priorizado 24h / 7 dias</li>
+                    <li>500 Requisições Diárias</li>
+                    <li>Token Personalizado</li>
+                    <li>APIs de todos os módulos</li>
+                    <li>Acesso antecipado aos módulos</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/5582993708218?text=QUERO%20ADQUIRIR%20O%20PLANO%20%27ANUAL%27%20DO%20CONSULT%20CENTER" class="cta">Adquirir</a>
+        </div>
+    </div>
+    <footer>
+        <span class="copyright">© 2025 Consult Center. Todos os direitos reservados.</span>
+    </footer>
+</body>
+</html>

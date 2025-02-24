@@ -1,0 +1,9 @@
+Flask
+PyJWT
+colorama
+cryptography
+requests
+waitress
+httpx
+asyncio
+Flask-WTF
