@@ -109,7 +109,7 @@ def generate_custom_cookies():
 
 def check_referrer():
     referrer = request.headers.get('Referer', '')
-    if not referrer.startswith('https://consult-center3.onrender.com'):
+    if not referrer.startswith('https://zayronx-buscas.onrender.com'):
         return False
     return True
 
